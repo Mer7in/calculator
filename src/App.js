@@ -1,11 +1,18 @@
 import React from "react";
 import "./App.css";
 
+
+const strTest=(str)=>{
+  const __CALCULATE = /^\d[.]\d(?:[+*\*]\d[.]\d)+$/;
+  const test = __CALCULATE.test(str);
+  return (test ?  true : false);
+ }
+
 const number = [
   {
     id: 0,
     text: "AC",
-    class:'options'
+    class: "options",
   },
   {
     id: 1,
@@ -85,86 +92,98 @@ const number = [
   },
 ];
 
-class  App  extends React.Component{
-  constructor(props){
-    super(props)
-    this.state={
-      data:'',
-      result:''
-    }
-    this.initialize=this.initialize.bind(this);
-    this.handleClick=this.handleClick.bind(this);
-
-    
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: "",
+      result: "",
+    };
+    this.initialize = this.initialize.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
-  initialize = ()=>{
+  initialize = () => {};
 
-  }
+  
+  dividedBy = () =>{}
 
   calculate = () => {
-    try {
-        const result = eval(this.state.result);
-        console.log(result);
-        this.setState({data: result});
-    } catch (e) {
-        this.setState({data: 'error'})
-        console.log(e);
-    }
-}
+    const value = this.state.result.split('');
+    // if(strTest(this.state.result)){
+    //   console.log('errorrrrrrrr')
+    // }else{
+    //   try {
+    //   const result = eval(this.state.result);
+    //   console.log(result);
+    //   this.setState({ data: result });
+    // } catch (e) {
+    //   this.setState({ data: "error" });
+    //   console.log(e);
+    // }
+    // }
+    
+  };
 
   handleClick = (e) => {
     e.preventDefault();
-    this.setState({result:'', data:''});
+    this.setState({ result: "", data: "" });
     console.log(this.state.result);
     const value = e.target.textContent;
     console.log(value);
-    
-    switch(value) {
-        case 'AC':
-            this.setState({ result: '', data:''});
-            break;
-        case '=':
-            this.calculate();
-            break;
-        case '±':
-          break;
-        default:
-            this.setState({ result: this.state.result + value});
-    }
-  }
 
-  render(){
+    switch (value) {
+      case "AC":
+        this.setState({ result: "", data: "" });
+        break;
+      case "=":
+        this.calculate();
+        break;
+      case "±":
+        this.setState({result:this.state.result});
+      case "÷":
+        this.setState({result:this.state.result+"/"});
+      case "0":
+        break;
+      default:
+        this.setState({ result: this.state.result + value });
+    }
+  };
+
+  render() {
     return (
-    <div id="calculator">
-      <div id="display">
-        <Options/>
-        <Display  data={this.state.data} result={this.state.result}/>
-      </div>
-      <div class="main">
-        <div id="button-container">
-          {number.map((item) => (
-            <Number text={item.text} number={item.id} onClick={this.handleClick}/>
-          ))}
+      <div id="calculator">
+        <div id="display">
+          <Options />
+          <Display data={this.state.data} result={this.state.result} />
+        </div>
+        <div class="main">
+          <div id="button-container">
+            {number.map((item) => (
+              <Number
+                text={item.text}
+                number={item.id}
+                onClick={this.handleClick}
+              />
+            ))}
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
   }
-  
 }
 
-class Display extends React.Component{
-  constructor(props){
+class Display extends React.Component {
+  constructor(props) {
     super(props);
   }
 
-  render(){
-    const {result, data} = this.props;
-    return(
+  render() {
+    const { result, data } = this.props;
+    return (
       <form className="form">
-         <input name="entry" value={data} />
-        <input name="result" value={result}/>
+        <input name="result" value={result} />
+        <input name="entry" value={data} />
       </form>
     );
   }
@@ -174,7 +193,6 @@ class Number extends React.Component {
   constructor(props) {
     super(props);
   }
-
 
   render() {
     const { text, number } = this.props;
@@ -186,18 +204,22 @@ class Number extends React.Component {
   }
 }
 
-class Options extends React.Component{
-  constructor(props){
+class Options extends React.Component {
+  constructor(props) {
     super(props);
   }
 
-  render(){
-    return(
+  render() {
+    return (
       <div className="options">
-        <a><i className="fas fa-sun"></i></a>
-        <a><i className="fas fa-moon"></i></a>
+        <a>
+          <i className="fas fa-sun"></i>
+        </a>
+        <a>
+          <i className="fas fa-moon"></i>
+        </a>
       </div>
-    )
+    );
   }
 }
 

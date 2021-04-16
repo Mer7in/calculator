@@ -89,7 +89,7 @@ body {
   outline: none;
 } 
 
-input[name=entry]{
+input[name=result]{
   font-size:1.3em;
 }
 
